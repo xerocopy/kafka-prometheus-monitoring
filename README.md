@@ -14,7 +14,7 @@ Dockerised example of monitoring [Apache Kafka](https://kafka.apache.org/) with 
 docker-compose up
 ```
 
-- View Prometheus UI - `http://$DOCKER_HOST_IP:9090`
+- View Prometheus UI - `http://$DOCKER_HOST_IP:9090` View Prometheus Metrics'http://$DOCKER_HOST_IP:9090/metrics'
 - Grafana UI - `http://$DOCKER_HOST_IP:3000` (admin:admin)
 - Kafka metrics - `http://$DOCKER_HOST_IP:8080/metrics`
 
