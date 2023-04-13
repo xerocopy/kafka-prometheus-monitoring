@@ -20,6 +20,7 @@ services:
   #     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
   #     - JMX_PORT=9999
 
+
   kafka:
     build: ./prometheus-kafka
     links:
@@ -62,18 +63,17 @@ services:
     links:
       #- kafka-jmx-exporter
       - kafka
-      # JCS adds the following
       - zookeeper
 
-
   grafana:
-    image: grafana/grafana:3.0.1
+    #image: grafana/grafana:3.0.1
+    image: grafana/grafana-enterprise:latest
     ports:
       - 3000:3000/tcp
     links:
       - prometheus
-    volumes:
-      - "graf-db:/var/lib/grafana"
+    # volumes:
+    #   - "graf-db:/var/lib/grafana" #dir removed for latest version
 
   graf-db:
     command:

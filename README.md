@@ -18,6 +18,10 @@ docker-compose up
 - Grafana UI - `http://$DOCKER_HOST_IP:3000` (admin:admin)
 - Kafka metrics - `http://$DOCKER_HOST_IP:8080/metrics`
 
+
+### dashboarding
+Node Exporter Full template ID: 1860 (https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
+
 ### Sending Kafka messages
 In order for the Kafka broker to expose JMX topic metrics you must send some messages to the topics.
 ```

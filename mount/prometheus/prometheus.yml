@@ -6,12 +6,20 @@ global:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 scrape_configs:
-  - job_name: kafka
+  - job_name: prometheus
     scrape_interval: 10s
     target_groups:
         - targets: ['localhost:9090']
+      
   #JCS adds the following
   - job_name: zookeeper
     scrape_interval: 10s
     target_groups:
         - targets: ['localhost:9090']
+        
+  - job_name: kafka
+    scrape_interval: 10s
+    target_groups:
+        - targets: ['localhost:9090']
+
+    

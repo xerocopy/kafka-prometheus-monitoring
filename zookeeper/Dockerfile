@@ -1,4 +1,5 @@
-FROM java:8
+#FROM java:8
+FROM openjdk:8
 
 RUN mkdir -p /opt /var/sky/zookeeper/data /var/sky/zookeeper/conf \
     && wget -q -O - https://archive.apache.org/dist/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz | tar -xzf - -C /opt \
