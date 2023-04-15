@@ -19,8 +19,21 @@ docker-compose up
 - Kafka metrics - `http://$DOCKER_HOST_IP:8080/metrics`
 
 
-### dashboarding
+### Grafana dashboarding
 Node Exporter Full template ID: 1860 (https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
+Use http://host.docker.internal:9090 as Data Sources/Prometheus in Grafana 
+
+### Important metrics to monitor (kafka jmx)
+Number of active controllers: should always be 1 (0 means kafka not working; 2 means huge bug)
+Number of Under Replicated Partitions: should always be 0 (otherwise means brokers are overloaded, misconfigured, network struggling)
+Number of Offline Partitions: should always be 0
+
+There are a tons of metrics you can find online:
+# https://kafka.apache.org/20/documentation.html#monitoring
+# http://docs.confluent.io/current/kafka/monitoring.html
+
+# CPU Usage | JVM Memory Used | Time spent in GC | Message In Per Topic | Bytes In Per Topic | Bytes Out Per Topic
+
 
 ### Sending Kafka messages
 In order for the Kafka broker to expose JMX topic metrics you must send some messages to the topics.

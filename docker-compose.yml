@@ -1,4 +1,5 @@
 version: "3.2"
+
 services:
   zookeeper:
     build: ./zookeeper
@@ -60,6 +61,8 @@ services:
     image: prom/prometheus:0.18.0
     volumes:
       - ./mount/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    restart: unless-stopped
     links:
       #- kafka-jmx-exporter
       - kafka
@@ -67,13 +70,16 @@ services:
 
   grafana:
     #image: grafana/grafana:3.0.1
-    image: grafana/grafana-enterprise:latest
+    image: grafana/grafana:latest
     ports:
       - 3000:3000/tcp
     links:
       - prometheus
-    # volumes:
+    volumes:
     #   - "graf-db:/var/lib/grafana" #dir removed for latest version
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
+
 
   graf-db:
     command:
@@ -87,3 +93,8 @@ services:
 
 volumes:
   graf-db:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
