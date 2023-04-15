@@ -55,7 +55,7 @@ services:
   #     - HTTP_PORT=8080
   #     - JMX_EXPORTER_CONFIG_FILE=kafka.yml
 
-  #cAdiviser
+  #cAdiviser # used to monitor local machine hardware metrics, may not be useful when moved to cloud
   cadvisor:
     image: google/cadvisor:latest
     container_name: cadvisor
@@ -71,7 +71,48 @@ services:
         - /dev/kmsg
 
   # node_exporter
+    #### learn more details before use
 
+  influxdb:
+      image: influxdb:latest
+      container_name: influxdb2
+      volumes:
+        - ./mount/influxdb/data:/var/lib/influxdb2:rw
+  #    env_file:
+  #      - .env
+  #    entrypoint: ["./entrypoint.sh"]
+      ports:
+        - 8086:8086
+      restart: unless-stopped
+
+  telegraf:
+    image: telegraf:1.19
+    container_name: telegraf
+  #    links:
+  #      - influxdb
+    volumes:
+      #  Sync timezone with host
+      - /etc/localtime:/etc/localtime:ro
+      #  Map Telegraf configuration file
+      - ./mount/influxdb/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      #  Map /tmp to permanent storage  (this includes /tmp/metrics.out)
+      - ./mount/influxdb:/tmp:rw
+    restart: unless-stopped
+    depends_on:
+      - influxdb
+
+  grafana:
+    #image: grafana/grafana:3.0.1
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000/tcp
+    links:
+      - prometheus
+      - influxdb
+    volumes:
+    #   - "graf-db:/var/lib/grafana" #dir removed for latest version
+      - grafana-data:/var/lib/grafana
+    restart: unless-stopped
 
   prometheus:
     ports:
@@ -86,35 +127,26 @@ services:
       - kafka
       - zookeeper
       - cadvisor
-
-  grafana:
-    #image: grafana/grafana:3.0.1
-    image: grafana/grafana:latest
-    ports:
-      - 3000:3000/tcp
-    links:
-      - prometheus
-    volumes:
-    #   - "graf-db:/var/lib/grafana" #dir removed for latest version
-      - grafana-data:/var/lib/grafana
-    restart: unless-stopped
+      - influxdb
 
 
-  graf-db:
-    command:
-      - cat
-    #image: infinityworks/graf-db:08  # https://github.com/infinityworks/graf-db/blob/master/Dockerfile
-    build: ./graf-db
-    links:
-      - prometheus
-    volumes:
-      - "graf-db:/var/lib/grafana/"
+  # graf-db:
+  #   command:
+  #     - cat
+  #   #image: infinityworks/graf-db:08  # https://github.com/infinityworks/graf-db/blob/master/Dockerfile
+  #   build: ./graf-db
+  #   links:
+  #     - prometheus
+  #   volumes:
+  #     - "graf-db:/var/lib/grafana/"
 
 volumes:
-  graf-db:
-  # need to confirm the following 
+  # graf-db:
+  # need to confirm the following setup
   prometheus-data:
     driver: local
   grafana-data:
+    driver: local
+  influxdb-storage:
     driver: local
 

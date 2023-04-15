@@ -22,6 +22,15 @@ docker-compose up
 ### Grafana dashboarding
 Node Exporter Full template ID: 1860 (https://grafana.com/grafana/dashboards/1860-node-exporter-full/)
 Use http://host.docker.internal:9090 as Data Sources/Prometheus in Grafana 
+Use http://host.docker.internal:8086 as Data Sources/InfluxDB in Grafana 
+
+### InfluxDB setup
+Username: admin
+Password: adminadmin
+Initial Organization Name: admin
+Initial Bucket Name: influxdb admin bucket 
+# superuser privileges token: dBZOo3pHXWAYqCoJ9QGSA_sx22LkzakgMO2Y-tpxvy6iD9iDI660LWm27-ldEtjNnlb_E-6ZBQUgZBXK-0N-1w==
+
 
 ### Important metrics to monitor (kafka jmx)
 Number of active controllers: should always be 1 (0 means kafka not working; 2 means huge bug)
