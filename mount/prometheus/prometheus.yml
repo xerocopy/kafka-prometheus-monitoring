@@ -15,17 +15,24 @@ scrape_configs:
   - job_name: prometheus
     scrape_interval: 10s
     target_groups:
-        - targets: ['9d45d36b261a:9090']
+        - targets: ['localhost:9090'] # (container ID: 9d45d36b261a)
       
   #JCS adds the following
   - job_name: zookeeper
     scrape_interval: 10s
     target_groups:
-        - targets: ['b3b839917b14:9090']
+        - targets: ['localhost:9090'] # (container ID b3b839917b14)
         
   - job_name: kafka
     scrape_interval: 10s
     target_groups:
-        - targets: ['913b3765a99b:7071'] # use container ID at local machine
+        - targets: ['096bf3cb5982:7071'] # use container ID: 913b3765a99b at local machine
 
-    
+
+  # - job_name: node_expoerter
+  #   static_configs:
+  #     - targets: ['node_exporter:9100']
+
+  - job_name: cadvisor
+    target_groups:
+      - targets: ['cadvisor:8080'] # this one needs to be 8080

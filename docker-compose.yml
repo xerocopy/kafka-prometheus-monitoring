@@ -3,6 +3,7 @@ version: "3.2"
 services:
   zookeeper:
     build: ./zookeeper
+    container_name: zookeeper
     command:
       - "start-foreground"
     ports:
@@ -21,7 +22,6 @@ services:
   #     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
   #     - JMX_PORT=9999
 
-
   kafka:
     build: ./prometheus-kafka
     links:
@@ -29,7 +29,7 @@ services:
     ports:
       - "9092:9092"
       - "7071:7071"
-      - "8080:8080"
+      - "8089:8089"
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ADVERTISED_PORT: 9092
@@ -55,6 +55,24 @@ services:
   #     - HTTP_PORT=8080
   #     - JMX_EXPORTER_CONFIG_FILE=kafka.yml
 
+  #cAdiviser
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+        - "8080:8080"
+    volumes: 
+        - /:/rootfs:ro
+        - /var/run:/var/run:ro
+        - /sys:/sys:ro 
+        - /var/lib/docker/:/var/lib/docker:ro
+        - /dev/disk/:/dev/disk:ro
+    devices:
+        - /dev/kmsg
+
+  # node_exporter
+
+
   prometheus:
     ports:
       - "9090:9090"
@@ -67,6 +85,7 @@ services:
       #- kafka-jmx-exporter
       - kafka
       - zookeeper
+      - cadvisor
 
   grafana:
     #image: grafana/grafana:3.0.1
@@ -93,6 +112,7 @@ services:
 
 volumes:
   graf-db:
+  # need to confirm the following 
   prometheus-data:
     driver: local
   grafana-data:
