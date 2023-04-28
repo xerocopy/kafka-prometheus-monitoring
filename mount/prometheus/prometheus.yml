@@ -1,6 +1,6 @@
 global:
-  scrape_interval:     10s # By default, scrape targets every 15 seconds.
-  evaluation_interval: 10s # By default, scrape targets every 15 seconds.
+  scrape_interval:     15s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 15s # By default, scrape targets every 15 seconds.
   # scrape_timeout is set to the global default (10s).
 
 # # Alertmanager configuration
@@ -13,18 +13,18 @@ global:
 # Here it's Prometheus itself.
 scrape_configs:
   - job_name: prometheus
-    scrape_interval: 10s
+    scrape_interval: 15s
     target_groups:
         - targets: ['localhost:9090'] # (container ID: 9d45d36b261a)
       
   #JCS adds the following
   - job_name: zookeeper
-    scrape_interval: 10s
+    scrape_interval: 15s
     target_groups:
         - targets: ['localhost:9090'] # (container ID b3b839917b14)
         
   - job_name: kafka
-    scrape_interval: 10s
+    scrape_interval: 15s
     target_groups:
         - targets: ['c696e5654664:7071'] # use container ID: 913b3765a99b at local machine
 

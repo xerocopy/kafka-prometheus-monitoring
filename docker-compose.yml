@@ -1,4 +1,4 @@
-version: "3.2"
+version: "2"
 
 services:
   zookeeper:
@@ -118,6 +118,7 @@ services:
     ports:
       - "9090:9090"
     image: prom/prometheus:0.18.0
+    #image: prom/prometheus:v2.43.0
     volumes:
       - ./mount/prometheus:/etc/prometheus
       - prometheus-data:/prometheus
