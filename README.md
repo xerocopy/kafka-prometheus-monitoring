@@ -31,6 +31,8 @@ Initial Organization Name: admin
 Initial Bucket Name: influxdb admin bucket 
 # superuser privileges token: dBZOo3pHXWAYqCoJ9QGSA_sx22LkzakgMO2Y-tpxvy6iD9iDI660LWm27-ldEtjNnlb_E-6ZBQUgZBXK-0N-1w==
 
+__y4ItX1-oX1CA_U3QSnf-kPf0wmL3aRUNFDwa3LOGRtgmWzbfHFOvMfq7q4FXlkhLLgN0K8qOhNyEFL5M9v7g==
+
 
 ### Important metrics to monitor (kafka jmx)
 Number of active controllers: should always be 1 (0 means kafka not working; 2 means huge bug)
